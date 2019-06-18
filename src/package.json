@@ -1,0 +1,23 @@
+{
+  "name": "openpage",
+  "version": "0.0.1",
+  "description": "An open platform to create public html webpages",
+  "main": "main.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/diogoaguiar/openpage.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "expressjs": "^1.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diogo Aguiar <diogo@dg7.pt>",
+  "license": "MIT"
+}
