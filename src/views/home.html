@@ -17,8 +17,11 @@
                         Welcome to OpenPages
                     </h1>
                     <p>
-                        Make a POST request to <i>{{base_url}}/[something]</i> with the parameter <strong>html</strong> containing some, <u>base64 encoded</u>, HTML.
+                        Make a POST request to <i>{{base_url}}/[page]</i> using the form below with the HTML you want to populate the page with.
                         Then visit the same URL to see the submitted HTML.
+                    </p>
+                    <p>
+                        You can also make that call externally. Just make sure you include the parameter <strong>html</strong> on your POST request, containing the HTML as a <u>base64 encoded</u> string.
                     </p>
                 </div>
             </div>
@@ -27,7 +30,7 @@
         <section class="section">
             <div class="container">
                 <h2 class="subtitle">
-                    You can use this form to submit a page:
+                    You can use this form to create a page:
                 </h2>
                 <form class="form" method="post" :action="page">
                     <div class="field has-addons">
@@ -41,7 +44,7 @@
                         </p>
                     </div>
                     <div class="field">
-                        <textarea v-model="html" class="textarea" placeholder="html" rows="6"></textarea>
+                        <textarea v-model="html" class="textarea" placeholder="HTML" rows="6"></textarea>
                     </div>
                     <input type="hidden" name="html" :value="base64html">
                     <div class="field">

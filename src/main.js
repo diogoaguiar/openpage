@@ -3,7 +3,7 @@ const fs = require('fs');
 const mustacheExpress = require('mustache-express');
 
 const app = express();
-const port = 80;
+const port = 8855;
 const pages = './pages/';
 const ext = '.html';
 
