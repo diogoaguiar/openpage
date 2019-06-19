@@ -15,7 +15,9 @@ function isValidPageName(name) {
 }
 
 // Routes
-app.get('/', (req, res) => res.send('Ok'))
+app.get('/', (req, res) => {
+    res.send(`Welcome to OpenPages.\nMake a POST request to '${req.headers.host}/{something}' with a parameter 'html' containing some HTML, encoded as base64 and that page will host the HTML you submitted.`);
+})
 app.get('/:page', (req, res) => {
     page = req.params.page;
     if (!isValidPageName(page)) {
@@ -26,8 +28,6 @@ app.get('/:page', (req, res) => {
     if (fs.existsSync(file)) {
         return res.sendFile(file, { root: __dirname })
     }
-
-    res.send(`This page is still empty. Make a POST request to '${req.headers.host}/${page}' with a parameter 'html' containing your HTML code encode as base64 and then come back.`)
 })
 app.post('/:page', (req, res) => {
     page = req.params.page;
