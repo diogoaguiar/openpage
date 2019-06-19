@@ -28,6 +28,8 @@ app.get('/:page', (req, res) => {
     if (fs.existsSync(file)) {
         return res.sendFile(file, { root: __dirname })
     }
+
+    res.send();
 })
 app.post('/:page', (req, res) => {
     page = req.params.page;
