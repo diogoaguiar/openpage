@@ -28,6 +28,9 @@ app.get('/', (req, res) => {
         base_url: req.headers.host
     });
 })
+app.get('/favicon.ico', (req, res) => {
+    res.sendFile('./favicon.ico', { root: __dirname });
+})
 app.get('/:page', (req, res) => {
     let page = req.params.page;
     console.log(`GET /${page}`);
