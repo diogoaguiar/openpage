@@ -1,51 +1,77 @@
 const express = require('express');
 const fs = require('fs');
+const mustacheExpress = require('mustache-express');
 
 const app = express();
 const port = 80;
 const pages = './pages/';
 const ext = '.html';
 
-app.use(express.json({limit: '50mb'}))
+app.use(express.json({limit: '50mb'}));
+app.use(express.urlencoded({limit: '50mb'}));
+
+app.engine('html', mustacheExpress());
+
+app.set('view engine', 'html');
+app.set('views', __dirname + '/views');
 
 // Methods
 function isValidPageName(name) {
-    regex = /^[A-Za-z0-9\-\_]+$/;
-    return !!name.match(regex)
+    let regex = /^[A-Za-z0-9\-\_]+$/;
+    return !!name.match(regex);
 }
 
 // Routes
 app.get('/', (req, res) => {
-    res.send(`Welcome to OpenPages.\nMake a POST request to '${req.headers.host}/{something}' with a parameter 'html' containing some HTML, encoded as base64 and that page will host the HTML you submitted.`);
+    console.log(`GET /`);
+    res.render('home', {
+        base_url: req.headers.host
+    });
 })
 app.get('/:page', (req, res) => {
-    page = req.params.page;
+    let page = req.params.page;
+    console.log(`GET /${page}`);
     if (!isValidPageName(page)) {
-        return res.send('Invalid page name.')
+        console.log('Invalid page name.');
+        return res.send('Invalid page name.');
     }
 
-    file = pages+page+ext
+    let file = pages+page+ext;
     if (fs.existsSync(file)) {
-        return res.sendFile(file, { root: __dirname })
+        console.log('Page exists.');
+        return res.sendFile(file, { root: __dirname });
     }
 
+    console.log('Page does not exist.');
     res.send();
 })
 app.post('/:page', (req, res) => {
-    page = req.params.page;
+    let page, body;
+
+    try {
+        page = req.params.page;
+        body = Buffer.from(req.body.html, 'base64');
+    } catch (e) {
+        console.log('Invalid parameters.');
+        return res.send('Invalid parameters.')
+    }
+
+    console.log(`POST /${page}`);
     if (!isValidPageName(page)) {
-        return res.send('Invalid page name.')
+        console.log('Invalid page name.');
+        return res.send('Invalid page name.');
     }
 
-    file = pages+page+ext
+    let file = pages+page+ext;
     if (fs.existsSync(file)) {
-        fs.unlinkSync(file)
+        console.log('Page exists. Will override.');
+        fs.unlinkSync(file);
     }
 
-    body = Buffer.from(req.body.html, 'base64');
-    fs.writeFileSync(file, body)
+    fs.writeFileSync(file, body);
 
-    res.send(`Page '${page}' was updated. Access '${req.headers.host}/${page}' to view your page.`)
+    console.log('Page updated.');
+    res.send(`Page '${page}' was updated. Access '${req.headers.host}/${page}' to view your page.`);
 })
 
-app.listen(port, () => console.log(`Server running on port ${port}`))
+app.listen(port, console.log(`Server running on port ${port}`));
