@@ -3,7 +3,7 @@ const fs = require('fs');
 const mustacheExpress = require('mustache-express');
 
 const app = express();
-const port = 80;
+const port = 8855;
 const pages = './pages/';
 const ext = '.html';
 
@@ -74,7 +74,10 @@ app.post('/:page', (req, res) => {
     fs.writeFileSync(file, body);
 
     console.log('Page updated.');
-    res.send(`Page '${page}' was updated. Access '${req.headers.host}/${page}' to view your page.`);
+    res.render('success', {
+        base_url: req.headers.host,
+        page: page
+    });
 })
 
 app.listen(port, console.log(`Server running on port ${port}`));
