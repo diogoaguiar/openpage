@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,16 +8,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <title>OpenPages - dg7.pt</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{tracking_id}}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '{{tracking_id}}');
+    </script>
 </head>
+
 <body>
     <div id="app">
         <section class="section">
             <div class="container">
                 <h1 class="title">Success!</h1>
                 <p>You have successfully submitted the page <strong>{{page}}</strong>.</p>
-                <p>Access <strong><a href="javascript:window.location.href=window.location.href">{{base_url}}/{{page}}</a></strong> to view your creation! 😊</p>
+                <p>Access <strong><a
+                            href="javascript:window.location.href=window.location.href">{{base_url}}/{{page}}</a></strong>
+                    to view your creation! 😊</p>
             </div>
         </section>
     </div>
 </body>
+
 </html>

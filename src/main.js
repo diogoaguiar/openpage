@@ -6,9 +6,10 @@ const app = express();
 const port = 8855;
 const pages = './pages/';
 const ext = '.html';
+const config = JSON.parse(fs.readFileSync("config.json"))
 
-app.use(express.json({limit: '50mb'}));
-app.use(express.urlencoded({limit: '50mb'}));
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ limit: '50mb' }));
 
 app.engine('html', mustacheExpress());
 
@@ -25,6 +26,7 @@ function isValidPageName(name) {
 app.get('/', (req, res) => {
     console.log(`GET /`);
     res.render('home', {
+        tracking_id: config.tracking_id,
         base_url: req.headers.host
     });
 })
@@ -39,7 +41,7 @@ app.get('/:page', (req, res) => {
         return res.send('Invalid page name.');
     }
 
-    let file = pages+page+ext;
+    let file = pages + page + ext;
     if (fs.existsSync(file)) {
         console.log('Page exists.');
         return res.sendFile(file, { root: __dirname });
@@ -65,7 +67,7 @@ app.post('/:page', (req, res) => {
         return res.send('Invalid page name.');
     }
 
-    let file = pages+page+ext;
+    let file = pages + page + ext;
     if (fs.existsSync(file)) {
         console.log('Page exists. Will override.');
         fs.unlinkSync(file);
@@ -75,6 +77,7 @@ app.post('/:page', (req, res) => {
 
     console.log('Page updated.');
     res.render('success', {
+        tracking_id: config.tracking_id,
         base_url: req.headers.host,
         page: page
     });
