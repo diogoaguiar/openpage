@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,17 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css">
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
     <title>OpenPage - dg7.pt</title>
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{tracking_id}}"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+        gtag('config', '{{tracking_id}}');
+    </script>
 </head>
+
 <body>
     <div id="app">
         <section class="hero">
@@ -17,16 +28,19 @@
                         Welcome to OpenPage
                     </h1>
                     <p>
-                        Make a POST request to <i>{{base_url}}/[page]</i> using the form below with the HTML you want to populate the page with.
+                        Make a POST request to <i>{{base_url}}/[page]</i> using the form below with the HTML you want to
+                        populate the page with.
                         Then visit the same URL to see the submitted HTML.
                     </p>
                     <p>
-                        You can also make that call externally. Just make sure you include the parameter <strong>html</strong> on your POST request, containing the HTML as a <u>base64 encoded</u> string.
+                        You can also make that call externally. Just make sure you include the parameter
+                        <strong>html</strong> on your POST request, containing the HTML as a <u>base64 encoded</u>
+                        string.
                     </p>
                 </div>
             </div>
         </section>
-    
+
         <section class="section">
             <div class="container">
                 <h2 class="subtitle">
@@ -49,7 +63,8 @@
                     <input type="hidden" name="html" :value="base64html">
                     <div class="field">
                         <div class="control">
-                            <button type="submit" class="button is-primary" :disabled="page.length == 0 || html.length == 0">
+                            <button type="submit" class="button is-primary"
+                                :disabled="page.length == 0 || html.length == 0">
                                 Submit
                             </button>
                         </div>
@@ -74,4 +89,5 @@
         })
     </script>
 </body>
+
 </html>
